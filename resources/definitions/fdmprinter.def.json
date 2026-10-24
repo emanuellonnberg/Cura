@@ -2266,6 +2266,45 @@
                     "limit_to_extruder": "infill_extruder_nr",
                     "settable_per_mesh": true
                 },
+                "crosshatch_roof_support_enabled":
+                {
+                    "label": "Cross Hatch Roof Support (Experimental)",
+                    "description": "Add branching support beneath local top surfaces, using the printed Cross Hatch paths and walls as anchors. Keeps the base Cross Hatch infill and takes precedence over Infill Skin Support. Available with single-layer, single-line infill, no gradual infill, no extra infill walls, and a single infill angle.",
+                    "type": "bool",
+                    "default_value": false,
+                    "enabled": "infill_pattern == 'crosshatch' and infill_sparse_density > 0 and top_layers > 0 and gradual_infill_steps == 0 and infill_multiplier == 1 and infill_wall_line_count == 0 and infill_sparse_thickness == layer_height and len(infill_angles) <= 1",
+                    "limit_to_extruder": "infill_extruder_nr",
+                    "settable_per_mesh": true,
+                    "children":
+                    {
+                        "crosshatch_roof_support_spacing":
+                        {
+                            "label": "Roof Support Spacing",
+                            "description": "Target spacing of support beneath the first solid top layer. Smaller values add more branches and use more material near roofs.",
+                            "type": "float",
+                            "unit": "mm",
+                            "default_value": 2.0,
+                            "minimum_value": "2 * infill_line_width",
+                            "maximum_value_warning": "infill_line_distance",
+                            "enabled": "crosshatch_roof_support_enabled",
+                            "limit_to_extruder": "infill_extruder_nr",
+                            "settable_per_mesh": true
+                        },
+                        "crosshatch_roof_support_angle":
+                        {
+                            "label": "Roof Support Branch Angle",
+                            "description": "Maximum horizontal growth of roof-support branches as a layer angle from vertical. Lower values spread support over more layers beneath the roof.",
+                            "type": "float",
+                            "unit": "\u00b0",
+                            "default_value": 40,
+                            "minimum_value": "5",
+                            "maximum_value": "75",
+                            "enabled": "crosshatch_roof_support_enabled",
+                            "limit_to_extruder": "infill_extruder_nr",
+                            "settable_per_mesh": true
+                        }
+                    }
+                },
                 "zig_zaggify_infill":
                 {
                     "label": "Connect Infill Lines",
